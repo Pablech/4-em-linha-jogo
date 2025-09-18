@@ -163,12 +163,23 @@ class Jogadores:
     def simbolo_2(self, simbolo):
         self.__simbolo_2 = simbolo
 
+    def __simbolo_ia(self):
+        """Gera e valída o símbolo da IA"""
+        lista_simbolo_ia = ['@', '#', '$', '&', '?']
+        while True:
+            simbolo_ia = random.choice(lista_simbolo_ia)
+            if simbolo_ia != self.__simbolo_1:
+                self.__simbolo_2 = simbolo_ia
+                break
+        return simbolo_ia
+
     def gera_jogadores(self, quantidade):
+        """Gera os jogadores"""
         jogadores = []
         simbolos = []
         for i in range(quantidade):
             limpa()
-            jogadores.append(input(f'Nome do jogador {i + 1}\n>>>  '))
+            jogadores.append(input(f'Nome do jogador {i + 1}\n>>> '))
             encerra_jogo(jogadores[i])
             while True:
                 simbolos.append(input(f'Símbolo de {jogadores[i]}\n>>> '))
@@ -179,22 +190,10 @@ class Jogadores:
                         continue
                     break
                 print('Digite apenas 1 caractere')
-
-        if quantidade == 1:
-            self.__jogador_1 = jogadores[0]
-            self.__simbolo_1 = simbolos[0]
-            self.__jogador_2 = 'IA'
-            lista_simbolo_ia = ['@', '#', '$', '&', '?']
-            while True:
-                simbolo_ia = random.choice(lista_simbolo_ia)
-                if simbolo_ia != self.__simbolo_1:
-                    self.__simbolo_2 = simbolo_ia
-                    break
-        if quantidade == 2:
-            self.__jogador_1 = jogadores[0]
-            self.__simbolo_1 = simbolos[0]
-            self.__jogador_2 = jogadores[1]
-            self.__simbolo_2 = simbolos[1]
+        self.__jogador_1 = jogadores[0]
+        self.__simbolo_1 = simbolos[0]
+        self.__jogador_2 = 'IA' if quantidade == 1 else jogadores[1]
+        self.__simbolo_2 = self.__simbolo_ia() if quantidade == 1 else simbolos[1]
 
     def jogada_humana(self, jogador, simbolo, colunas_disponiveis):
         """Gera uma jogada humana, testa se a entrada é integer e se é uma coluna válida"""
@@ -250,14 +249,14 @@ class Jogo:
         limpa()
 
         modo_ia = False
-        while True: # "Loop" para iniciar os jogadores
+        while True:  # "Loop" para iniciar os jogadores
             try:
                 modo = input('Escolha o modo de jogo:\n1 - Jogador vs Jogador\n2 - Jogador vs IA\nSair = --sair\n>>> ')
                 encerra_jogo(modo)
-                if modo == '1': # Se o usuário escolhe a primeira opção, criamse 2 jogadores
+                if modo == '1':  # Se o usuário escolhe a primeira opção, criamse 2 jogadores
                     self.__jogadores.gera_jogadores(2)
                     break
-                if modo == '2': # Se o usuário escolhe a segunda opção, se cria 1 jogador e uma IA
+                if modo == '2':  # Se o usuário escolhe a segunda opção, se cria 1 jogador e uma IA
                     self.__jogadores.gera_jogadores(1)
                     modo_ia = True
                     break
