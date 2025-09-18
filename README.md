@@ -1,5 +1,5 @@
 # 4-em-linha-jogo
-Jogo criado para fins didáticos
+Jogo criado para fins de aprendizado
 
 # ♟️ Quatro em Linha
 
